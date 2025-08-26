@@ -1,0 +1,25 @@
+[project]
+name = "trs-service"
+version = "0.0.1"
+description = "TRS is a flow analysis service that allows you to get a snapshot of what is happening in the flow."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic-settings>=2.10.1",
+    "ruff>=0.12.10",
+    "structlog>=25.4.0",
+    "telebot>=0.0.5",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
