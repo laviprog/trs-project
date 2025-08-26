@@ -7,5 +7,16 @@ class Settings(BaseSettings):
     BOT_TOKEN: str
     CHANNEL_NAME: str
 
+    ARCHIVE_URL: str
+    TOKEN: str
+
+    AI_BASE_URL: str
+    AI_EMAIL: str
+    AI_PASSWORD: str
+
+    TRANSCRIPTION_BASE_URL: str
+    TRANSCRIPTION_USERNAME: str
+    TRANSCRIPTION_PASSWORD: str
+
 
 settings = Settings()
