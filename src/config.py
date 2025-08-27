@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     ARCHIVE_URL: str
     TOKEN: str
 
+    AI_MODEL: str
     AI_BASE_URL: str
     AI_EMAIL: str
     AI_PASSWORD: str
