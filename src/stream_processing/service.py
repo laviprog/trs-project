@@ -63,47 +63,47 @@ class StreamService:
                                         .replace("”", '"')
                                         .strip("`")
                                     )
-                                try:
-                                    result_json = json.loads(result)
-                                except JSONDecodeError as e:
-                                    log.error("JSONDecodeError: %s", e)
-                                else:
-                                    log.info("JSON result: %s", result_json)
-                                    start_time, end_time = map(
-                                        int,
-                                        map(
-                                            float,
-                                            [
-                                                t.strip()
-                                                for t in result_json["time_range"].split("-")
-                                            ],
-                                        ),
-                                    )
+                                    try:
+                                        result_json = json.loads(result)
+                                    except JSONDecodeError as e:
+                                        log.error("JSONDecodeError: %s", e)
+                                    else:
+                                        log.info("JSON result: %s", result_json)
+                                        start_time, end_time = map(
+                                            int,
+                                            map(
+                                                float,
+                                                [
+                                                    t.strip()
+                                                    for t in result_json["time_range"].split("-")
+                                                ],
+                                            ),
+                                        )
 
-                                    start_time_normal = datetime.fromtimestamp(
-                                        start_time + 60 * 60 * 3
-                                    ).strftime("%H:%M:%S")
-                                    end_time_normal = datetime.fromtimestamp(
-                                        end_time + 60 * 60 * 3
-                                    ).strftime("%H:%M:%S")
+                                        start_time_normal = datetime.fromtimestamp(
+                                            start_time + 60 * 60 * 3
+                                        ).strftime("%H:%M:%S")
+                                        end_time_normal = datetime.fromtimestamp(
+                                            end_time + 60 * 60 * 3
+                                        ).strftime("%H:%M:%S")
 
-                                    caption = (
-                                        f"<b>News</b>\n\n"
-                                        f"{start_time_normal}-{end_time_normal}\n\n"
-                                        f"<b>Summary</b>: {result_json['summary']}\n\n"
-                                        f"<blockquote><b>Краткая выжимка</b>: "
-                                        f"{result_json['summary_ru']}</blockquote>\n\n"
-                                        f"<b>Temperature</b>: {result_json['temperature']}\n\n"
-                                        + " ".join(f"#{tag}" for tag in result_json["tags"])
-                                    )
+                                        caption = (
+                                            f"<b>News</b>\n\n"
+                                            f"{start_time_normal}-{end_time_normal}\n\n"
+                                            f"<b>Summary</b>: {result_json['summary']}\n\n"
+                                            f"<blockquote><b>Краткая выжимка</b>: "
+                                            f"{result_json['summary_ru']}</blockquote>\n\n"
+                                            f"<b>Temperature</b>: {result_json['temperature']}\n\n"
+                                            + " ".join(f"#{tag}" for tag in result_json["tags"])
+                                        )
 
-                                    video_path = get_video_from_archive(
-                                        start_time, min(end_time - start_time, 60)
-                                    )
+                                        video_path = get_video_from_archive(
+                                            start_time, min(end_time - start_time, 60)
+                                        )
 
-                                    self._bot.send_video_from_file(video_path)
-                                    self._bot.send_message(caption)
-                                    log.info("Send message: %s", caption)
+                                        self._bot.send_video_from_file(video_path)
+                                        self._bot.send_message(caption)
+                                        log.info("Send message: %s", caption)
 
             end_time_counter = time.perf_counter()
             duration_execution = end_time_counter - start_time_counter
