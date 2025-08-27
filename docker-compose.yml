@@ -1,0 +1,9 @@
+services:
+  trs-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trs-service
+    image: trs-service
+    env_file:
+      - .env
