@@ -18,7 +18,6 @@ class AIClient(BaseClient):
         self._messages: list[Message] = []
         self._message_context = message_context
 
-
     def login(self) -> None:
         """
         Login to the AI service using credentials.
@@ -41,7 +40,7 @@ class AIClient(BaseClient):
     def _pop_message(self) -> Message:
         return self._messages.pop(0)
 
-    def completions(self, content: str) -> str:
+    def chat_completions(self, content: str) -> str:
         """
         Get chat completions from the AI service.
         :return: The response content from the AI service
@@ -60,7 +59,7 @@ class AIClient(BaseClient):
 
         DATA = {
             "model": self._model,
-            "messages": self._messages,
+            "messages": [message.to_dict() for message in self._messages],
         }
 
         response = self._post(endpoint=ENDPOINT, json=DATA)
